@@ -36,3 +36,5 @@ gh secret set GALAXY_API_KEY -R ${GITHUB_USER}/ansible_collection_${GITHUB_USER}
 sed -i "/Role Structure/Q" README.md
 
 rm ./replace.sh
+
+cd ../../
