@@ -5,14 +5,12 @@ Documentation for the collection.
 Collection Structure
 --------------
 
-This collection makes use of my [boilerplate repository](https://github.com/diademiemi/ansible_role_%74emplate.git).  
+This collection makes use of my [Ansible Role Template repository](https://github.com/diademiemi/ansible_role_%74emplate.git).  The `add-role.sh` script downloads this Template and generates a new role with the name specified. If a `molecule/default/molecule.yml` file is present, it will be ran with GitHub Actions.  
 <!-- I use %74 here to encode to a "t" so it doesnt get recursively replaced. The .git causes a redirect so you end up at the right URL :)-->
-
-A script `add-role.sh` is provided to add a new role to the collection. This will download the latest version of my boilerplate role project and generate a new role with the name specified.  
 
 Usage:
 ```bash
-export NEW_ROLE_NAME="NEW_NAME"
+export NEW_ROLE_NAME="new_role"
 ./add-role.sh ${NEW_ROLE_NAME}
 ```
 
@@ -31,7 +29,7 @@ find . -type f -exec sed -i "s/template/${NEW_ROLE_NAME}/g" {} + # Do not run th
 gh secret set GALAXY_API_KEY -R ${GITHUB_USER}/ansible_collection_${GITHUB_USER}.${NEW_COLLECTION_NAME} -a actions -b ${GALAXY_API_KEY}
 
 # Remove this section from README.md
-sed -i "/Collection Structure/Q" README.md
+sed -i "/Using Template/Q" README.md
 ```
 
 This is also provided as a script as `replace.sh`.  
