@@ -1,5 +1,7 @@
 # Ansible Collection - diademiemi.template
 
+[![Molecule Test](https://github.com/diademiemi/ansible_collection_diademiemi.template/actions/workflows/molecule.yml/badge.svg)](https://github.com/diademiemi/ansible_collection_diademiemi.template/actions/workflows/molecule.yml)
+
 Documentation for the collection.
 
 Collection Structure
