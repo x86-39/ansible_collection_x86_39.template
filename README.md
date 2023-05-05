@@ -5,9 +5,10 @@ Documentation for the collection.
 Collection Structure
 --------------
 
-This collection makes use of my [ansible_role_template](https://github.com/diademiemi/ansible_role_template) repository.  
+This collection makes use of my [boilerplate repository](https://github.com/diademiemi/ansible_role_%74emplate.git).  
+<!-- I use %74 here to encode to a "t" so it doesnt get recursively replaced. The .git causes a redirect so you end up at the right URL :)-->
 
-A script `add-role.sh` is provided to add a new role to the collection. This will download the latest version of the template and generate a new role with the name specified.  
+A script `add-role.sh` is provided to add a new role to the collection. This will download the latest version of my boilerplate role project and generate a new role with the name specified.  
 
 Usage:
 ```bash

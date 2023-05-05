@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-    echo "Enter role name: "
+    echo "Enter collection name: "
     read NEW_COLLECTION_NAME
 else
     NEW_COLLECTION_NAME=$1
@@ -26,8 +26,8 @@ if [ -z "$GALAXY_API_KEY" ]; then
 fi
 
 
-find . -type f -exec sed -i "s/diademiemi/${GITHUB_USER}/g" {} + # Do not run this more than once
-find . -type f -exec sed -i "s/template/${NEW_COLLECTION_NAME}/g" {} + # Do not run this more than once
+find roles docs meta plugins galaxy.yml LICENSE README.md \
+    -type f -exec sed -i -e "s/diademiemi/${GITHUB_USER}/g" -e "s/template/${NEW_COLLECTION_NAME}/g" {} + # Do not run this more than once
 
 # Assumes repo is named ansible_role_${NEW_ROLE_NAME}
 gh secret set GALAXY_API_KEY -R ${GITHUB_USER}/ansible_collection_${GITHUB_USER}.${NEW_COLLECTION_NAME} -a actions -b ${GALAXY_API_KEY}
