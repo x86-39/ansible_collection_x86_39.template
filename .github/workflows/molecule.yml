@@ -7,6 +7,11 @@ name: Molecule Test
       - main
     paths:
       - "roles/**"
+  workflow_dispatch:
+    inputs:
+      role:
+        description: 'Role to test'
+        required: true
 
 jobs:
   find-molecule:
@@ -31,6 +36,10 @@ jobs:
       - name: Return roles that have molecule tests
         id: matrix
         run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "matrix=[\"${{ github.event.inputs.role }}\"]" >> "$GITHUB_ENV"
+            exit 0
+          fi
           roles=""
           for role in ${{ steps.changed-roles.outputs.all_changed_and_modified_files }}; do
             if [ -f roles/$role/molecule/default/molecule.yml ]; then
@@ -38,6 +47,7 @@ jobs:
             fi
           done
           echo "matrix=[$roles]" >> "$GITHUB_ENV"
+          exit 0
 
 
   molecule:
