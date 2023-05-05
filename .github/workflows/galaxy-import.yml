@@ -4,9 +4,11 @@
 
 name: Import to Galaxy
 'on':
-  workflow_run:
-    workflows: ['Molecule Test']
-    types: ["completed"]
+  push:
+    branches:
+      - main
+    paths:
+      - "galaxy.yml"
 
 jobs:
   galaxy-import:
@@ -16,16 +18,35 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v2
 
+      - name: Get version from "galaxy.yml".
+        id: version
+        run: echo "collection_version=$(yq '.version' galaxy.yml)" >> "$GITHUB_ENV"
+
       - name: Set up Python 3.
+        if: "!contains(github.ref, env.collection_version)"
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
       - name: Install Ansible.
+        if: "!contains(github.ref, env.collection_version)"
         run: pip3 install ansible-core
 
       - name: Trigger a new import on Galaxy.
+        if: "!contains(github.ref, env.collection_version)"
         run: >-
           ansible-galaxy collection build &&
           ansible-galaxy collection publish --api-key ${{ secrets.GALAXY_API_KEY }} $(ls -t *.tar.gz | head -n 1)
 
+      - name: Release on GitHub.
+        if: "!contains(github.ref, env.collection_version)"
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.collection_version }}
+          release_name: ${{ env.collection_version }}
+          draft: false
+          prerelease: false
+
+...

@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Get changhed roles
+      - name: Get changed roles
         id: changed-roles
         uses: tj-actions/changed-files@v35
         with:
@@ -42,10 +42,18 @@ jobs:
           fi
           roles=""
           for role in ${{ steps.changed-roles.outputs.all_changed_and_modified_files }}; do
+            echo "Checking $role"
             if [ -f roles/$role/molecule/default/molecule.yml ]; then
-              roles='$roles\"$role\", '
+              echo "Found molecule.yml in $role"
+              if [ -z "$roles" ]; then
+                roles="\"$role\""
+              else
+                roles="$roles, \"$role\""
+              fi
+              echo DEBUG $roles
             fi
           done
+          echo DEBUG "matrix_output=[$roles]"
           echo "matrix_output=[$roles]" >> "$GITHUB_ENV"
           exit 0
 
