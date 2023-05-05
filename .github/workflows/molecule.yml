@@ -17,7 +17,7 @@ jobs:
   find-molecule:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
+      matrix: ${{ env.matrix_output }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,7 +37,7 @@ jobs:
         id: matrix
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "matrix=[\"${{ github.event.inputs.role }}\"]" >> "$GITHUB_ENV"
+            echo "matrix_output=[\"${{ github.event.inputs.role }}\"]" >> "$GITHUB_ENV"
             exit 0
           fi
           roles=""
@@ -46,7 +46,7 @@ jobs:
               roles='$roles\"$role\", '
             fi
           done
-          echo "matrix=[$roles]" >> "$GITHUB_ENV"
+          echo "matrix_output=[$roles]" >> "$GITHUB_ENV"
           exit 0
 
 
