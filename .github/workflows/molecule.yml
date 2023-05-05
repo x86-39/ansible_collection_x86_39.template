@@ -37,7 +37,7 @@ jobs:
               roles='$roles\"$role\", '
             fi
           done
-          echo "::set-output name=value::[$roles]"
+          echo "matrix=[$roles]" >> "$GITHUB_ENV"
 
 
   molecule:
