@@ -9,6 +9,10 @@ name: Import to Galaxy
       - main
     paths:
       - "galaxy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   galaxy-import:
@@ -16,37 +20,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get version from "galaxy.yml".
         id: version
         run: echo "collection_version=$(yq '.version' galaxy.yml)" >> "$GITHUB_ENV"
 
+      - name: Check if tag already exists
+        uses: mukunku/tag-exists-action@v1.2.0
+        id: check-tag
+        with: 
+          tag: '${{ env.collection_version }}'
+
       - name: Set up Python 3.
-        if: "!contains(github.ref, env.collection_version)"
+        if: "${{ steps.check-tag.outputs.exists == 'false' }}"
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
       - name: Install Ansible.
-        if: "!contains(github.ref, env.collection_version)"
+        if: "${{ steps.check-tag.outputs.exists == 'false' }}"
         run: pip3 install ansible-core
 
       - name: Trigger a new import on Galaxy.
-        if: "!contains(github.ref, env.collection_version)"
+        if: "${{ steps.check-tag.outputs.exists == 'false' }}"
         run: >-
           ansible-galaxy collection build &&
           ansible-galaxy collection publish --api-key ${{ secrets.GALAXY_API_KEY }} $(ls -t *.tar.gz | head -n 1)
 
-      - name: Release on GitHub.
-        if: "!contains(github.ref, env.collection_version)"
-        uses: actions/create-release@latest
+      - name: Add tag.
+        if: "${{ steps.check-tag.outputs.exists == 'false' }}"
+        uses: anothrNick/github-tag-action@1.61.0 # Don't use @master unless you're happy to test the latest version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.collection_version }}
-          release_name: ${{ env.collection_version }}
-          draft: false
-          prerelease: false
-
+          CUSTOM_TAG: ${{ env.collection_version }}
 ...
