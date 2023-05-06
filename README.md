@@ -1,8 +1,20 @@
-# Ansible Collection - diademiemi.template
-
+Ansible Collection - diademiemi.template
+========================================
 [![Molecule Test](https://github.com/diademiemi/ansible_collection_diademiemi.template/actions/workflows/molecule.yml/badge.svg)](https://github.com/diademiemi/ansible_collection_diademiemi.template/actions/workflows/molecule.yml)
 
-Documentation for the collection.
+Documentation for the collection template.
+
+Contents 
+========
+
+Roles
+------
+Role | Description
+--- | ---
+[diademiemi.jellyfin.install](./roles/install/) | Install Jellyfin on Debian 11
+[diademiemi.jellyfin.intel_arc](./roles/intel_arc/) | Install necessary Intel Arc drivers for hardware encoding
+
+Click on the role to see the README for that role.  
 
 Collection Structure
 --------------
