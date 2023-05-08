@@ -9,12 +9,12 @@ fi
 
 if [ -z "$2" ]; then
     if [ -z "$GITHUB_USER" ]; then
-        if [ "$USERNAME" == "diademiemi" ]
-        then
+        if [ "$USERNAME" == "diademiemi" ]; then
             GITHUB_USER="diademiemi" # For my own convenience
         else
             echo "Enter github user: "
             read GITHUB_USER
+        fi
     fi
 else
     GITHUB_USER="$2"
@@ -33,7 +33,7 @@ find roles docs meta plugins galaxy.yml LICENSE README.md \
 gh secret set GALAXY_API_KEY -R ${GITHUB_USER}/ansible_collection_${GITHUB_USER}.${NEW_COLLECTION_NAME} -a actions -b ${GALAXY_API_KEY}
 
 # Remove this section from README.md
-sed -i "/Role Structure/Q" README.md
+sed -i "/Collection Structure/Q" README.md
 
 rm ./replace.sh
 
