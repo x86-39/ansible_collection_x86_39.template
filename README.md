@@ -11,8 +11,7 @@ Roles
 ------
 Role | Description
 --- | ---
-[diademiemi.jellyfin.install](./roles/install/) | Install Jellyfin on Debian 11
-[diademiemi.jellyfin.intel_arc](./roles/intel_arc/) | Install necessary Intel Arc drivers for hardware encoding
+<!-- [diademiemi.template.role](./roles/role/) | Example role -->
 
 Click on the role to see the README for that role.  
 
