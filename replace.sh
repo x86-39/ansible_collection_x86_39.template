@@ -24,9 +24,8 @@ fi
 # Assumes repo is named ansible_collection_${GITHUB_USER}.${NEW_ROLE_NAME}
 gh secret set GALAXY_API_KEY -R ${GITHUB_USER}/ansible_collection_${GITHUB_USER}.${NEW_COLLECTION_NAME} -a actions -b ${GALAXY_API_KEY}
 
-find roles docs meta plugins galaxy.yml LICENSE README.md \
+find roles docs meta plugins galaxy.yml changelogs LICENSE README.md \
     -type f -exec sed -i -e "s/diademiemi/${GITHUB_USER}/g" -e "s/template/${NEW_COLLECTION_NAME}/g" {} + # Do not run this more than once
-
 
 # Remove this section from README.md
 sed -i "/Collection Structure/Q" README.md
