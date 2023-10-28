@@ -1,7 +1,5 @@
 Ansible Collection - diademiemi.template
 ========================================
-[![Molecule Test](https://github.com/diademiemi/ansible_collection_diademiemi.template/actions/workflows/molecule.yml/badge.svg)](https://github.com/diademiemi/ansible_collection_diademiemi.template/actions/workflows/molecule.yml)
-
 Documentation for the collection template.
 
 Contents 
@@ -9,9 +7,9 @@ Contents
 
 Roles
 ------
-Role | Description
---- | ---
-<!-- [diademiemi.template.role](./roles/role/) | Example role -->
+Role | Description | CI Status
+--- | --- | ---
+<!-- [diademiemi.template.EXAMPLE](./roles/template/) | Install EXAMPLE | [![Molecule test](https://github.com/diademiemi/ansible_collection_diademiemi.template/actions/workflows/ansible-role-EXAMPLE.yml/badge.svg)](https://github.com/diademiemi/ansible_collection_diademiemi.template/actions/workflows/ansible-role-EXAMPLE.yml) -->
 
 Click on the role to see the README for that role.  
 
